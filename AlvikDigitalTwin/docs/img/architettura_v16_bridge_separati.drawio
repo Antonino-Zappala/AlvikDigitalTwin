@@ -1,0 +1,99 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Architettura v1.7 - Bridge Unificato" id="DXGI1Wwu1LfDnWp5Ett7">
+    <mxGraphModel dx="1579" dy="899" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="SlQnh39h3K-KaeIjQJuX-1" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" value="Alvik Digital Twin v1.6 — Architettura Bridge Separati" vertex="1">
+          <mxGeometry height="40" width="870" x="170.0033333333335" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="SlQnh39h3K-KaeIjQJuX-2" parent="1" style="swimlane;startSize=30;fillColor=#f9dbc8;strokeColor=#d85a30;fontSize=12;fontStyle=1;rounded=1;" value="HARDWARE LAYER" vertex="1">
+          <mxGeometry height="160" width="300" x="460.0033333333335" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="SlQnh39h3K-KaeIjQJuX-3" parent="SlQnh39h3K-KaeIjQJuX-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9dbc8;strokeColor=#d85a30;fontSize=11;align=left;spacingLeft=8;" value="Arduino Alvik (ESP32 + STM32)&#xa;192.168.4.1:5005&#xa;&#xa;• Firmware C++ RT&#xa;• Telemetria CSV 50Hz UDP&#xa;• Motor Control / Odometria STM32&#xa;• Sensori: ToF ×5, Encoder, IMU&#xa;• Watchdog CMD 500ms" vertex="1">
+          <mxGeometry height="110" width="280" x="5" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="SlQnh39h3K-KaeIjQJuX-4" parent="1" style="swimlane;startSize=30;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;rounded=1;" value="BRIDGE DDS — bridge_DDS_v1_5.py" vertex="1">
+          <mxGeometry height="190" width="300" x="80.0033333333335" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="SlQnh39h3K-KaeIjQJuX-5" parent="SlQnh39h3K-KaeIjQJuX-4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacingLeft=8;" value="Thread DDS (RT 50Hz)&lt;br&gt;&lt;br&gt;• Riceve CSV da Alvik UDP :5005&lt;br&gt;• Parsing 12 campi:&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; x,y,θ,wl,wr,5×ToF,TickId,t_ms&lt;br&gt;• Broadcast DDS binario :4444 → Godot&lt;br&gt;• Broadcast DDS binario :4445 → ROS2&lt;br&gt;• Invia CMD → Alvik UDP :5005" vertex="1">
+          <mxGeometry height="140" width="280" x="10" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="SlQnh39h3K-KaeIjQJuX-6" parent="1" style="swimlane;startSize=30;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;rounded=1;" value="BRIDGE WEBSOCKET — bridge_websocket_v1_6.py" vertex="1">
+          <mxGeometry height="190" width="310" x="840" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="SlQnh39h3K-KaeIjQJuX-7" parent="SlQnh39h3K-KaeIjQJuX-6" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacingLeft=8;" value="asyncio event loop&lt;br&gt;&lt;br&gt;• Server WebSocket :8765 ↔ Godot&lt;br&gt;• Riceve: waypoint, teleop, stop,&lt;br&gt;&amp;nbsp; reset, alignment&lt;br&gt;• Invia CMD → Alvik UDP :5005&lt;br&gt;• Feedback e log → Godot&lt;br&gt;• Path following proporzionale" vertex="1">
+          <mxGeometry height="140" width="290" x="10" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="SlQnh39h3K-KaeIjQJuX-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" value="⚠ PROBLEMA&lt;br&gt;Nessuna sincronizzazione diretta&lt;br/&gt;tra i due bridge.&amp;nbsp;&lt;div&gt;(posizione via Godot → doppia latenza)&lt;br/&gt;→ complessità e comportamento imprevedibile&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="250" x="480" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="SlQnh39h3K-KaeIjQJuX-9" parent="1" style="swimlane;startSize=30;fillColor=#e8d5f9;strokeColor=#534ab7;fontSize=12;fontStyle=1;rounded=1;" value="VISUALIZATION — Godot Engine 4" vertex="1">
+          <mxGeometry height="160" width="300" x="80.0033333333335" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="SlQnh39h3K-KaeIjQJuX-10" parent="SlQnh39h3K-KaeIjQJuX-9" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8d5f9;strokeColor=#534ab7;fontSize=11;align=left;spacingLeft=8;" value="DDS_v1_5.gd (Autoload)&#xa;UDP :4444&#xa;&#xa;• Riceve posa, ToF, TickId 50Hz&#xa;• Aggiorna posizione Digital Twin 3D&#xa;• Visualizzazione raggi ToF&#xa;• Label stato connessione/posa" vertex="1">
+          <mxGeometry height="110" width="280" x="10" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="SlQnh39h3K-KaeIjQJuX-11" parent="1" style="swimlane;startSize=30;fillColor=#e8d5f9;strokeColor=#534ab7;fontSize=12;fontStyle=1;rounded=1;" value="CONTROL — Godot Engine 4" vertex="1">
+          <mxGeometry height="160" width="300" x="840.0033333333336" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="SlQnh39h3K-KaeIjQJuX-12" parent="SlQnh39h3K-KaeIjQJuX-11" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8d5f9;strokeColor=#534ab7;fontSize=11;align=left;spacingLeft=8;" value="WebSocketPeer :8765&lt;br&gt;&lt;br&gt;• Invia: waypoint, teleop, stop,&lt;br&gt;&amp;nbsp; &amp;nbsp;reset, alignment&lt;br&gt;• Riceve: log, feedback, ack&lt;br&gt;• Modalità: TELEOP, WAYPOINT,&lt;br&gt;&amp;nbsp; PATH, ALIGN" vertex="1">
+          <mxGeometry height="110" width="280" x="10" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="SlQnh39h3K-KaeIjQJuX-13" parent="1" style="swimlane;startSize=30;fillColor=#dae8fc;strokeColor=#185fa5;fontSize=12;fontStyle=1;rounded=1;dashed=1;dashPattern=8 4;" value="DOCKER — ROS2 Humble [opzionale: SLAM]" vertex="1">
+          <mxGeometry height="140" width="420" x="400.0033333333335" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="SlQnh39h3K-KaeIjQJuX-14" parent="SlQnh39h3K-KaeIjQJuX-13" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#185fa5;fontSize=11;" value="alvik_ros_bridge.py&#xa;• Riceve DDS :4445&#xa;• Pubblica /odom /tf /scan" vertex="1">
+          <mxGeometry height="70" width="190" x="10" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="SlQnh39h3K-KaeIjQJuX-15" parent="SlQnh39h3K-KaeIjQJuX-13" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#185fa5;fontSize=11;" value="slam_toolbox&#xa;• /map&#xa;• SLAM real-time" vertex="1">
+          <mxGeometry height="70" width="180" x="220" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="SlQnh39h3K-KaeIjQJuX-16" edge="1" parent="1" source="SlQnh39h3K-KaeIjQJuX-2" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;strokeColor=#d85a30;strokeWidth=2;fontColor=#d85a30;fontStyle=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="SlQnh39h3K-KaeIjQJuX-4" value="UDP :5005  CSV 50Hz">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SlQnh39h3K-KaeIjQJuX-17" edge="1" parent="1" source="SlQnh39h3K-KaeIjQJuX-4" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;strokeColor=#d85a30;strokeWidth=2;fontColor=#d85a30;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="SlQnh39h3K-KaeIjQJuX-2" value="CMD">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="60.0033333333335" y="435" />
+              <mxPoint x="60.0033333333335" y="170" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SlQnh39h3K-KaeIjQJuX-18" edge="1" parent="1" source="SlQnh39h3K-KaeIjQJuX-6" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;strokeColor=#d6b656;strokeWidth=2;fontColor=#d6b656;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="SlQnh39h3K-KaeIjQJuX-2" value="CMD">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1170" y="435" />
+              <mxPoint x="1170" y="170" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SlQnh39h3K-KaeIjQJuX-19" edge="1" parent="1" source="SlQnh39h3K-KaeIjQJuX-4" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;strokeColor=#534ab7;strokeWidth=2;fontColor=#534ab7;fontStyle=1;" target="SlQnh39h3K-KaeIjQJuX-9" value="UDP :4444  DDS binario RT">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SlQnh39h3K-KaeIjQJuX-20" edge="1" parent="1" source="SlQnh39h3K-KaeIjQJuX-6" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;strokeColor=#534ab7;strokeWidth=2;fontColor=#534ab7;" target="SlQnh39h3K-KaeIjQJuX-11" value="WebSocket :8765  JSON">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SlQnh39h3K-KaeIjQJuX-21" edge="1" parent="1" source="SlQnh39h3K-KaeIjQJuX-4" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;strokeColor=#185fa5;strokeWidth=2;fontColor=#185fa5;dashed=1;" target="SlQnh39h3K-KaeIjQJuX-13" value="UDP :4445  DDS binario">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="230" y="540" />
+              <mxPoint x="610" y="540" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SlQnh39h3K-KaeIjQJuX-22" edge="1" parent="1" source="SlQnh39h3K-KaeIjQJuX-4" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#b85450;strokeWidth=2;dashed=1;" target="SlQnh39h3K-KaeIjQJuX-8" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="430" y="435" />
+              <mxPoint x="430" y="420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SlQnh39h3K-KaeIjQJuX-23" edge="1" parent="1" source="SlQnh39h3K-KaeIjQJuX-6" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#b85450;strokeWidth=2;dashed=1;" target="SlQnh39h3K-KaeIjQJuX-8" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

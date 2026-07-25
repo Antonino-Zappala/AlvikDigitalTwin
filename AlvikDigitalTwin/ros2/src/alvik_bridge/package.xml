@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>alvik_bridge</name>
+  <version>1.0.0</version>
+  <description>Bridge ROS2 per Arduino Alvik — Digital Twin v1.6</description>
+  <maintainer email="user@example.com">user</maintainer>
+  <license>MIT</license>
+
+  <!-- Build -->
+  <buildtool_depend>ament_python</buildtool_depend>
+
+  <!-- Runtime — nodi ROS2 -->
+  <depend>rclpy</depend>
+  <depend>nav_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>std_srvs</depend>
+  <depend>tf2_ros</depend>
+
+  <!-- Runtime — robot state publisher e URDF -->
+  <depend>robot_state_publisher</depend>
+  <depend>xacro</depend>
+
+  <!-- Runtime — SLAM e Nav2 -->
+  <depend>slam_toolbox</depend>
+  <depend>nav2_bringup</depend>
+
+  <!-- Launch -->
+  <depend>launch</depend>
+  <depend>launch_ros</depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

@@ -1,0 +1,148 @@
+[gd_scene load_steps=15 format=3 uid="uid://c3yvavrsvf5s5"]
+
+[ext_resource type="Script" uid="uid://deaj6ggehctuq" path="res://selezione_waypoint_v1_7.gd" id="1_hk1yc"]
+[ext_resource type="PackedScene" uid="uid://1ara30jeqnor" path="res://Alvik.glb" id="1_l485i"]
+[ext_resource type="Script" uid="uid://r5efe8c3lkx8" path="res://digital_twin_v1_7.gd" id="3_02gco"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ujual"]
+
+[sub_resource type="Sky" id="Sky_hk1yc"]
+sky_material = SubResource("ProceduralSkyMaterial_ujual")
+
+[sub_resource type="Environment" id="Environment_02gco"]
+background_mode = 2
+sky = SubResource("Sky_hk1yc")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ujual"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ujual"]
+size = Vector2(10, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hk1yc"]
+albedo_color = Color(0.155447, 0.405033, 0.311456, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hk1yc"]
+size = Vector3(10, 0.003, 10)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ujual"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ujual"]
+bg_color = Color(0.111197, 0.111197, 0.111197, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_hk1yc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_02gco"]
+
+[node name="AlvikRobotEnv" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_02gco")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.221804, 0.488256, -0.844044, -0.104473, 0.872522, 0.477275, 0.969478, -0.0176816, 0.244538, -0.929743, 0.540712, 0.0336696)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.0101052, 0.402694, -0.915279, 0, 0.915326, 0.402715, 0.999949, 0.00406953, -0.00924959, -0.326369, 0.202951, 0.0424569)
+script = ExtResource("1_hk1yc")
+
+[node name="ObstacleMap" type="Node3D" parent="."]
+top_level = true
+
+[node name="Obstacles" type="Node3D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="Floor" type="StaticBody3D" parent="Obstacles"]
+collision_mask = 2
+physics_material_override = SubResource("PhysicsMaterial_ujual")
+metadata/_edit_lock_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Obstacles/Floor"]
+mesh = SubResource("PlaneMesh_ujual")
+surface_material_override/0 = SubResource("StandardMaterial3D_hk1yc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Obstacles/Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.002, 0, 0)
+shape = SubResource("BoxShape3D_hk1yc")
+
+[node name="Alvik" parent="." instance=ExtResource("1_l485i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0413689, 0)
+script = ExtResource("3_02gco")
+
+[node name="RayCast_L" type="RayCast3D" parent="Alvik"]
+
+[node name="RayCast_CL" type="RayCast3D" parent="Alvik"]
+
+[node name="RayCast_C" type="RayCast3D" parent="Alvik"]
+
+[node name="RayCast_CR" type="RayCast3D" parent="Alvik"]
+
+[node name="RayCast_R" type="RayCast3D" parent="Alvik"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="DebugLabel" type="RichTextLabel" parent="CanvasLayer"]
+material = SubResource("CanvasItemMaterial_ujual")
+anchors_preset = -1
+anchor_right = 0.296917
+anchor_bottom = 0.208531
+offset_right = -0.0480347
+offset_bottom = -0.128006
+theme_override_styles/normal = SubResource("StyleBoxFlat_ujual")
+bbcode_enabled = true
+metadata/_edit_use_anchors_ = true
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="InfoLabel" type="RichTextLabel" parent="CanvasLayer2"]
+material = SubResource("CanvasItemMaterial_ujual")
+anchors_preset = -1
+anchor_left = 0.621014
+anchor_right = 1.0
+anchor_bottom = 0.170951
+offset_left = -0.408081
+offset_top = 1.0
+offset_right = 3.0
+offset_bottom = 0.223984
+theme_override_styles/normal = SubResource("StyleBoxFlat_ujual")
+bbcode_enabled = true
+metadata/_edit_use_anchors_ = true
+
+[node name="CoordLabel" type="Label" parent="CanvasLayer2"]
+auto_translate_mode = 2
+anchors_preset = -1
+anchor_left = 0.035
+anchor_top = 0.472
+anchor_right = 0.138
+anchor_bottom = 0.5
+offset_left = 33.68
+offset_top = 0.143982
+offset_right = 0.0239868
+offset_bottom = 5.0
+
+[node name="CanvasLayer3" type="CanvasLayer" parent="."]
+
+[node name="MenuLabel" type="RichTextLabel" parent="CanvasLayer3"]
+material = SubResource("CanvasItemMaterial_hk1yc")
+anchors_preset = -1
+anchor_left = 0.283
+anchor_top = 0.037
+anchor_right = 0.717
+anchor_bottom = 0.963
+offset_left = -0.0160217
+offset_top = 0.0240002
+offset_right = 0.0159912
+offset_bottom = -0.0240479
+theme_override_styles/normal = SubResource("StyleBoxFlat_02gco")
+bbcode_enabled = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[editable path="Alvik"]

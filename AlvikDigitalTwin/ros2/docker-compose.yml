@@ -1,0 +1,16 @@
+version: "3.3"
+
+services:
+  alvik_ros2:
+    build: .
+    container_name: alvik_ros2
+    network_mode: host          # condivide la rete con il host → vede Alvik WiFi
+    environment:
+      - DISPLAY=${DISPLAY}      # per RViz2
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix   # per RViz2
+      - /home/neobot78/Scrivania/progetto_alvik/ros2/src:/ros2_ws/src
+      - /home/neobot78/Scrivania/progetto_alvik/ros2/config:/ros2_ws/config
+    stdin_open: true
+    tty: true
+    command: bash

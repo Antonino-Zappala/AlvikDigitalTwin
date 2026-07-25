@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" version="21.0.0">
+  <diagram name="Architettura v1.7 - Bridge Unificato" id="arch_v17">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- TITOLO -->
+        <mxCell id="title" value="Alvik Digital Twin v1.7 — Architettura Bridge Unificato" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="20" width="1000" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- HARDWARE LAYER -->
+        <mxCell id="hw_container" value="HARDWARE LAYER" style="swimlane;startSize=30;fillColor=#f9dbc8;strokeColor=#d85a30;fontSize=12;fontStyle=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="70" width="300" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="alvik" value="Arduino Alvik (ESP32 + STM32)&#xa;192.168.4.1:5005&#xa;&#xa;• Firmware C++ RT&#xa;• Telemetria CSV 50Hz UDP&#xa;• Motor Control / Odometria STM32&#xa;• Sensori: ToF ×5, Encoder, IMU&#xa;• Watchdog CMD 500ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9dbc8;strokeColor=#d85a30;fontSize=11;align=left;spacingLeft=8;" vertex="1" parent="hw_container">
+          <mxGeometry x="10" y="40" width="280" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- MIDDLEWARE UNIFICATO -->
+        <mxCell id="bridge_container" value="MIDDLEWARE — bridge_v1_7.py  (unico processo Python)" style="swimlane;startSize=30;fillColor=#d5e8d4;strokeColor=#1d9e75;fontSize=12;fontStyle=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="330" width="1020" height="250" as="geometry" />
+        </mxCell>
+
+        <!-- Thread DDS -->
+        <mxCell id="dds_thread" value="Thread DDS  (RT 50Hz)&#xa;&#xa;• Riceve CSV da Alvik UDP :5005&#xa;• Parsing 12 campi:&#xa;  x,y,θ,wl,wr,5×ToF,TickId,t_ms&#xa;• Tick master 50Hz&#xa;• Broadcast DDS binario :4444 → Godot&#xa;• Broadcast DDS binario :4445 → ROS2&#xa;• Invia CMD → Alvik UDP :5005&#xa;• Riceve /cmd_vel ← ROS2 UDP :5006&#xa;• Legge asyncio.Queue (CMD da WS)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#1d9e75;fontSize=11;align=left;spacingLeft=8;" vertex="1" parent="bridge_container">
+          <mxGeometry x="20" y="40" width="300" height="190" as="geometry" />
+        </mxCell>
+
+        <!-- asyncio.Queue -->
+        <mxCell id="queue" value="asyncio.Queue&#xa;(CMD thread-safe)&#xa;&#xa;DDS Thread → WS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;" vertex="1" parent="bridge_container">
+          <mxGeometry x="340" y="95" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- asyncio WS -->
+        <mxCell id="ws_thread" value="asyncio event loop&#xa;&#xa;• Server WebSocket :8765 ↔ Godot&#xa;• Riceve: waypoint, path, teleop,&#xa;  stop, reset, alignment,&#xa;  explorer/slam/nav2 start/stop&#xa;• Passa CMD → asyncio.Queue&#xa;• subprocess → Docker ROS2&#xa;• Log e feedback → Godot&#xa;• Path following a 20Hz" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#1d9e75;fontSize=11;align=left;spacingLeft=8;" vertex="1" parent="bridge_container">
+          <mxGeometry x="520" y="40" width="280" height="190" as="geometry" />
+        </mxCell>
+
+        <!-- Log su file -->
+        <mxCell id="log_file" value="Log su file&#xa;/log/bridge_YYYYMMDD.log&#xa;Max 100MB — rotazione auto" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;" vertex="1" parent="bridge_container">
+          <mxGeometry x="820" y="95" width="180" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Frecce interne bridge -->
+        <mxCell id="qi1" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d6b656;strokeWidth=2;" edge="1" parent="bridge_container" source="dds_thread" target="queue">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qi2" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d6b656;strokeWidth=2;" edge="1" parent="bridge_container" source="queue" target="ws_thread">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- GODOT DDS -->
+        <mxCell id="godot_dds_c" value="VISUALIZATION — Godot Engine 4" style="swimlane;startSize=30;fillColor=#e8d5f9;strokeColor=#534ab7;fontSize=12;fontStyle=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="670" width="300" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="godot_dds" value="DDS_v1_7.gd (Autoload)&#xa;UDP :4444&#xa;&#xa;• Riceve posa, ToF, TickId 50Hz&#xa;• Sync con TickId (no duplicati)&#xa;• Aggiorna Digital Twin 3D&#xa;• Raggi ToF, label posa&#xa;• Stato connessione Bridge/Alvik" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8d5f9;strokeColor=#534ab7;fontSize=11;align=left;spacingLeft=8;" vertex="1" parent="godot_dds_c">
+          <mxGeometry x="10" y="40" width="280" height="130" as="geometry" />
+        </mxCell>
+
+        <!-- GODOT WS -->
+        <mxCell id="godot_ws_c" value="CONTROL — Godot Engine 4" style="swimlane;startSize=30;fillColor=#e8d5f9;strokeColor=#534ab7;fontSize=12;fontStyle=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="670" width="320" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="godot_ws" value="selezione_waypoint_v1_7.gd&#xa;WebSocket :8765&#xa;&#xa;• Invia: waypoint, path, teleop,&#xa;  stop, reset, alignment,&#xa;  explorer/slam/nav2 start/stop&#xa;• Riceve: log, feedback, ack&#xa;• Modalità: TELEOP, WAYPOINT,&#xa;  PATH, ALIGN, EXPLORER,&#xa;  SLAM, NAV2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8d5f9;strokeColor=#534ab7;fontSize=11;align=left;spacingLeft=8;" vertex="1" parent="godot_ws_c">
+          <mxGeometry x="10" y="40" width="300" height="170" as="geometry" />
+        </mxCell>
+
+        <!-- DOCKER ROS2 -->
+        <mxCell id="docker_c" value="DOCKER — Container &quot;alvik_ros2&quot;  ROS2 Humble  [opzionale: Esploratore / Nav2 / Calibrazione PID]" style="swimlane;startSize=30;fillColor=#dae8fc;strokeColor=#185fa5;fontSize=12;fontStyle=1;rounded=1;dashed=1;dashPattern=8 4;" vertex="1" parent="1">
+          <mxGeometry x="300" y="670" width="720" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="ros_bridge" value="alvik_ros_bridge.py&#xa;&#xa;• Riceve DDS UDP :4445&#xa;• Pubblica /odom /tf (100Hz) /scan&#xa;• TF continuo → evita gap WiFi&#xa;• theta = alvik_theta + π&#xa;• pos = -alvik_pos (negato)&#xa;• /cmd_vel → UDP :5006 → bridge" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#185fa5;fontSize=11;align=left;spacingLeft=8;" vertex="1" parent="docker_c">
+          <mxGeometry x="10" y="40" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="slam" value="slam_toolbox&#xa;&#xa;• /map&#xa;• Odometria pura&#xa;• use_scan_matching:&#xa;  false&#xa;• max_laser_range: 2.0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#185fa5;fontSize=11;align=left;spacingLeft=8;" vertex="1" parent="docker_c">
+          <mxGeometry x="225" y="40" width="150" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="nav2" value="Nav2 stack&#xa;&#xa;• AMCL&#xa;• bt_navigator&#xa;• controller_server&#xa;  (PurePursuit)&#xa;• planner_server&#xa;  (NavfnPlanner)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#185fa5;fontSize=11;align=left;spacingLeft=8;" vertex="1" parent="docker_c">
+          <mxGeometry x="390" y="40" width="150" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="pid" value="alvik_pid_controller.py&#xa;&#xa;• PID posizione&#xa;• ROTATING → MOVING&#xa;  → ADJUSTING&#xa;• /pid_debug&#xa;  → PlotJuggler" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacingLeft=8;" vertex="1" parent="docker_c">
+          <mxGeometry x="555" y="40" width="150" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="rviz" value="RViz2&#xa;Fixed Frame: map&#xa;/map /tf /scan /odom" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#185fa5;fontSize=11;" vertex="1" parent="docker_c">
+          <mxGeometry x="225" y="210" width="480" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Frecce interne Docker -->
+        <mxCell id="d1" value="/scan /tf" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;strokeColor=#185fa5;" edge="1" parent="docker_c" source="ros_bridge" target="slam">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d2" value="/odom /tf" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;strokeColor=#185fa5;" edge="1" parent="docker_c" source="ros_bridge" target="nav2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d3" value="/odom" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;strokeColor=#d6b656;" edge="1" parent="docker_c" source="ros_bridge" target="pid">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d4" value="/cmd_vel" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;strokeColor=#d6b656;" edge="1" parent="docker_c" source="nav2" target="ros_bridge">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="465" y="200" />
+              <mxPoint x="110" y="200" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d5" value="/cmd_vel" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;strokeColor=#d6b656;" edge="1" parent="docker_c" source="pid" target="ros_bridge">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="630" y="210" />
+              <mxPoint x="110" y="210" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- FRECCE ESTERNE -->
+        <!-- Alvik → bridge DDS -->
+        <mxCell id="a1" value="UDP :5005  CSV telemetria 50Hz" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;strokeColor=#d85a30;strokeWidth=2;fontColor=#d85a30;fontStyle=1;exitX=0.3;exitY=1;exitDx=0;exitDy=0;entryX=0.3;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="hw_container" target="bridge_container">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- bridge → Alvik CMD -->
+        <mxCell id="a2" value="UDP :5005  CMD" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;strokeColor=#d85a30;strokeWidth=2;fontColor=#d85a30;exitX=0.1;exitY=0;exitDx=0;exitDy=0;entryX=0.1;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="bridge_container" target="hw_container">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="220" y="310" />
+              <mxPoint x="220" y="240" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- bridge → Godot DDS -->
+        <mxCell id="a3" value="UDP :4444  DDS binario RT  (posa, ToF, tick 50Hz)" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;strokeColor=#534ab7;strokeWidth=2;fontColor=#534ab7;fontStyle=1;" edge="1" parent="1" source="bridge_container" target="godot_dds_c">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Godot WS ↔ bridge WS -->
+        <mxCell id="a4" value="WebSocket :8765  JSON comandi/log" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;strokeColor=#534ab7;strokeWidth=2;fontColor=#534ab7;" edge="1" parent="1" source="godot_ws_c" target="bridge_container">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- bridge → alvik_ros_bridge -->
+        <mxCell id="a5" value="UDP :4445  DDS binario  [solo Esploratore/Nav2]" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;strokeColor=#185fa5;strokeWidth=2;fontColor=#185fa5;dashed=1;" edge="1" parent="1" source="bridge_container" target="docker_c">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- alvik_ros_bridge → bridge (cmd_vel) -->
+        <mxCell id="a6" value="UDP :5006  /cmd_vel → Alvik" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;strokeColor=#185fa5;strokeWidth=2;fontColor=#185fa5;dashed=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="docker_c" target="bridge_container">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="180" y="810" />
+              <mxPoint x="180" y="455" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,20 @@
+# Godot 4
+.godot/
+*.translation
+export.cfg
+
+# ROS2 / colcon
+ros2/build/
+ros2/install/
+ros2/log/
+__pycache__/
+*.pyc
+
+# Log applicativi
+log/
+*.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
