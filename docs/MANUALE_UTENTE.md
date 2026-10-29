@@ -134,7 +134,7 @@ Alvik:  ● CONNESSO
 ---  
 <div align="center">  
 
-![alt text](GodotBridgeAlvikConnected.png)  
+<img src="img/GodotBridgeAlvikConnected.png" width="84%">    
 *Interfaccia Godot con Bridge e Alvik connessi — label verdi in alto a sinistra*
 
 </div>  
