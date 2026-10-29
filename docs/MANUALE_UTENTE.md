@@ -173,10 +173,10 @@ L'interfaccia Godot è divisa in tre aree:
 ---  
 <div align="center">
 
-<img src="GodotSchermataIniziale.png" width="80%">
+<img src="img/GodotSchermataIniziale.png" width="80%">
 <div align="center">Schermata iniziale</div> 
 
-<img src="GodotVistaAlto.png" width="80%">
+<img src="img/GodotVistaAlto.png" width="80%">
 <div align="center">Vista dall'alto</div> 
 
 </div>
@@ -200,10 +200,10 @@ L'interfaccia Godot è divisa in tre aree:
 
 <div align="center">
 
-<img src="GodotVistaLateraleGriglia.png" width="75%">
+<img src="img/GodotVistaLateraleGriglia.png" width="75%">
 <div align="center">Vista laterale</div> 
 
-<img src="GodotVistaFirstPersonGriglia.png" width="75%">
+<img src="img/GodotVistaFirstPersonGriglia.png" width="75%">
 <div align="center">Vista in prima persona</div> 
 
 </div>
@@ -242,7 +242,7 @@ Utile per identificare punti precisi prima di inviarli come goal.
 ### 5.1 Teleop (T) <span style="font-weight: normal; font-size: 0.85em;">— Controllo manuale del robot tramite tastiera</span>
 
 <div style="float: right; margin-left: 20px; margin-bottom: 10px; text-align: center;">
-<img src="GodotTeleop.png" width="440px" height="240px"/><br/>
+<img src="img/GodotTeleop.png" width="440px" height="240px"/><br/>
 <em>Modalità Teleop — robot in movimento con raggi ToF verdi</em>
 </div>
 
@@ -364,7 +364,7 @@ Il sistema avvia automaticamente:
 ---
 <div align="center">  
 
-<img src="SLAM.png" width="60%">
+<img src="img/SLAM.png" width="60%">
 
 *RViz2 con mappa SLAM in costruzione — mappa grigia con celle nere (ostacoli)*
 
@@ -417,7 +417,7 @@ Navigazione autonoma su mappa precostruita. Richiede che sia stata salvata una m
 
 <div align="center">
 
-<img src="GodotNav2.png" height="195px"/> <img src="Nav2.png" height="195px"/>
+<img src="img/GodotNav2.png" height="195px"/> <img src="img/Nav2.png" height="195px"/>
 
 *Nav2 in esecuzione — Alvik che segue il percorso pianificato con RViz2*
 
@@ -456,7 +456,7 @@ Vengono avviati automaticamente:
 
 <div align="center">  
 
-<img src="CalibPIDschermataIniziale.png" width="58%">  
+<img src="img/CalibPIDschermataIniziale.png" width="58%">  
 
 *Modalità calibrazione PID — schermata iniziale*  
 
@@ -466,7 +466,7 @@ Vengono avviati automaticamente:
 
 <div align="center">  
 
-<img src="modalita_cal_PID_avviata.png" width="80%">  
+<img src="img/modalita_cal_PID_avviata.png" width="80%">  
 
 *Modalità calibrazione PID avviata*  
 
@@ -556,7 +556,7 @@ ros2 node list
 
 <div align="center">  
 
-<img src="plot_juggler.png" width="100%">  
+<img src="img/plot_juggler.png" width="100%">  
 
 *Test di calibrazione PID in esecuzione*  
 
