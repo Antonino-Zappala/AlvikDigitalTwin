@@ -152,7 +152,7 @@ Oppure premere **Ctrl+C** nella shell di avvio.
 
 <div align="center">  
 
-![alt text](alvik_stop.png)  
+<img src="img/alvik_stop.png" width="84%"> 
 *Script di stop delle varie componenti dell'applicazione*
 
 </div>  
@@ -283,7 +283,7 @@ Selezione manuale di punti di percorso con il mouse.
 ---
 <div align="center">  
 
-![alt text](GodotSelectWaypoint.png)
+<img src="img/GodotSelectWaypoint.png" width="440px" height="240px"/>
 *Modalità Waypoint — marker rossi con etichette coordinate sul pavimento*
 
 </div>
