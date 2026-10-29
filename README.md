@@ -230,8 +230,12 @@ acc=3.0 cm/s²  dec=2.0 cm/s²  vmax_lin=12.0 cm/s  vmax_ang=60.0 deg/s
 
 ---
 
-## Keywords
-Arduino Alvik Digital Twin, ROS2 Humble Navigation, Godot 4 Robotics Simulation, SLAM Toolbox autonomous robot, Python DDS bridge, Nav2 path following PID, Docker ROS2 container.
+<!-- 
+KEYWORDS PER INDICIZZAZIONE SEO (INVISIBILI NEL README REGOLARE):
+Arduino Alvik Digital Twin, ROS2 Humble Navigation, Godot 4 Robotics Simulation, 
+SLAM Toolbox autonomous robot, Python DDS bridge, Nav2 path following PID, 
+Docker ROS2 container, gemello digitale robotica, simulazione 3D tempo reale.
+-->
 
 ---
 
