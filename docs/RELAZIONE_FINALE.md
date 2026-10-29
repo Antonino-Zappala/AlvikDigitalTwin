@@ -93,7 +93,7 @@ Alvik Digital Twin v1.7 è un framework applicativo per la prototipazione, il co
 <br>
 
 <div align="center">
-<img src="img/AlvikFisicoStart.png" height="290px"/>   <img src="AlvikFisico.jpeg" height="290px"/>
+<img src="img/AlvikFisicoStart.png" height="290px"/>   <img src="img/AlvikFisico.jpeg" height="290px"/>
 
 *Alvik Digital Twin e Alvik fisico a confronto*
 </div>
