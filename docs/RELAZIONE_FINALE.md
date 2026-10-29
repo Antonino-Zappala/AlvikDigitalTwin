@@ -93,7 +93,7 @@ Alvik Digital Twin v1.7 è un framework applicativo per la prototipazione, il co
 <br>
 
 <div align="center">
-<img src="AlvikFisicoStart.png" height="290px"/>   <img src="AlvikFisico.jpeg" height="290px"/>
+<img src="img/AlvikFisicoStart.png" height="290px"/>   <img src="AlvikFisico.jpeg" height="290px"/>
 
 *Alvik Digital Twin e Alvik fisico a confronto*
 </div>
@@ -285,7 +285,7 @@ La separazione delle ruote è fondamentale per l'animazione: in Godot ogni ruota
 <br>
 
 <div align="center">
-<img src="AlvikBlender.png"/>
+<img src="img/AlvikBlender.png"/>
 
 *Modello 3D di Alvik in Blender*
 </div>
@@ -337,7 +337,7 @@ La mappa si cancella con il tasto `C` in Godot (`clear_obstacle_map()`).
 
 <div align="center">
 
-<img src="AlvikFisicoVistaAlto.jpeg" width="41%" height="280px" style="transform: rotate(90deg);"/> <img src="GodotOstacoli.png" width="48%" height="280px"/>
+<img src="img/AlvikFisicoVistaAlto.jpeg" width="41%" height="280px" style="transform: rotate(90deg);"/> <img src="img/GodotOstacoli.png" width="48%" height="280px"/>
 
 *Vista dall'alto di Alvik fisico nell'ambiente reale (sinistra) — mappa ostacoli dinamica nel Digital Twin (destra)*
 
@@ -350,7 +350,7 @@ La mappa si cancella con il tasto `C` in Godot (`clear_obstacle_map()`).
 
 <div align="center">
 
-<img src="AlvikFisicoOstacoli.jpeg" width="48%" height="280px"/> <img src="GodotOstacoliLaterale.png" width="48%" height="280px"/>
+<img src="img/AlvikFisicoOstacoli.jpeg" width="48%" height="280px"/> <img src="img/GodotOstacoliLaterale.png" width="48%" height="280px"/>
 
 *Vista laterale di Alvik fisico nell'ambiente reale (sinistra) — mappa ostacoli dinamica nel Digital Twin (destra)*
 
@@ -429,7 +429,7 @@ label.position      = Vector3(-0.08, 0.05, -0.08)
 
 <div align="center">
 
-<img src="GodotWaypoints.png"/>
+<img src="img/GodotWaypoints.png"/>
 
 *Modalità Waypoint con marker rossi e label coordinate gialle*
 
