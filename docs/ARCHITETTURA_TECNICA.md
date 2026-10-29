@@ -224,44 +224,44 @@ bridge_v1_7.py (unico processo)
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                    ARDUINO ALVIK                                  │
+│                    ARDUINO ALVIK                                │
 │  ESP32 (WiFi) + STM32 (motori, encoder, ToF)                    │
 │  UDP CSV 50Hz → 192.168.4.1:5005                                │
 └──────────────────────┬──────────────────────────────────────────┘
                        │ UDP telemetria CSV
                        ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                   bridge_v1_7.py                                 │
-│  Thread DDS (50Hz) + asyncio WebSocket + asyncio path following  │
-│                                                                   │
-│  Uscite:                                                          │
+│                   bridge_v1_7.py                                │
+│  Thread DDS (50Hz) + asyncio WebSocket + asyncio path following │
+│                                                                 │
+│  Uscite:                                                        │
 │  • UDP :4444 → Godot (DDS binario)                              │
 │  • UDP :4445 → alvik_ros_bridge (DDS binario)                   │
-│  • WS  :8765 ↔ Godot (JSON comandi/notifiche)                  │
+│  • WS  :8765 ↔ Godot (JSON comandi/notifiche)                   │
 │  • UDP :5005 → Alvik (comandi CMD,vlin,vang)                    │
-└───────┬──────────────────────────────────┬───────────────────────┘
+└───────┬──────────────────────────────────┬──────────────────────┘
         │ UDP DDS :4444                    │ WebSocket :8765
         ▼                                  ▼
 ┌───────────────┐                ┌──────────────────────────────────┐
 │  Godot DT     │                │  Godot DT                        │
 │  Visualiz. 3D │                │  Controllo modalità              │
-│  (DDS_v1_7.gd)│                │  (selezione_waypoint_v1_7.gd)   │
+│  (DDS_v1_7.gd)│                │  (selezione_waypoint_v1_7.gd)    │
 └───────────────┘                └──────────────────────────────────┘
 
         │ UDP DDS :4445
         ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│              Docker Container "alvik_ros2"                       │
+│              Docker Container "alvik_ros2"                      │
 │              Ubuntu 20.04 + ROS2 Humble                         │
-│                                                                   │
+│                                                                 │
 │  alvik_ros_bridge ──→ /odom, /tf (100Hz), /scan                 │
-│                                                                   │
+│                                                                 │
 │  ┌─────────────────────────────────────────────────────────┐    │
 │  │  slam_toolbox     → /map                                │    │
-│  │  nav2_bringup     → AMCL + controller + planner        │    │
-│  │  alvik_pid_controller ← /pid/command                   │    │
+│  │  nav2_bringup     → AMCL + controller + planner         │    │
+│  │  alvik_pid_controller ← /pid/command                    │    │
 │  └─────────────────────────────────────────────────────────┘    │
-│                          │ /cmd_vel                              │
+│                          │ /cmd_vel                             │
 └──────────────────────────┼──────────────────────────────────────┘
                            │ UDP :5006
                            ▼
