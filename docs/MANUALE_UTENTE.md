@@ -107,7 +107,7 @@ Alla comparsa del menu di avvio premere **ENTER** per avviare l'applicazione pri
 ---  
 <div align="center">  
 
-<img src="ApplicazioneSchermataIniziale.png" width="84%">  
+<img src="img/ApplicazioneSchermataIniziale.png" width="84%">  
 
 *Menu di avvio dell'applicazione — schermata terminale con le opzioni ENTER/C*  
 
