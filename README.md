@@ -270,13 +270,12 @@ deriva dal materiale del corso di Sistemi Robotici del prof. Corrado Santoro
 (Università di Catania):
 https://github.com/corradosantoro/RoboticSystems/tree/main/lib/dds
 
-L'implementazione server in GDScript (`DDS_v1_7.gd`) e il modulo DDS del bridge
-Python sono riscritture mie, adattate a questo progetto. La pubblicazione è stata
-concordata con l'autore del protocollo.
-
-Il codice originale di Santoro non fa parte di questo repository e non è coperto
-dalla licenza GPLv3 di questo progetto. Questo non è lo standard DDS dell'OMG
-usato da ROS 2, ma un protocollo semplificato.
+Il file `DDS_v1_7.gd` è derivato dal suo server DDS in GDScript, adattato a questo
+progetto: è usato e pubblicato con il consenso dell'autore, resta di sua proprietà
+e non è coperto dalla licenza GPLv3 di questo progetto, che vale per il resto del
+codice (compreso il modulo DDS di `bridge_v1_7.py`, che usa solo il formato del
+protocollo). Questo non è lo standard DDS dell'OMG usato da ROS 2, ma un protocollo
+semplificato.  
 
 **Modello 3D.** Il modello di Alvik è stato scansionato dal robot fisico
 con uno smartphone e ripulito in Blender.
