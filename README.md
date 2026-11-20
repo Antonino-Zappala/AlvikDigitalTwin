@@ -32,9 +32,9 @@ Arduino Alvik (192.168.4.1)
         │  UDP CSV 50Hz (x, y, theta, RPM, ToF, TickId)
         ▼
   bridge/bridge_v1_7.py  ─────────────────────────────────────┐
-        │                                                    │
-        │  UDP DDS binario :4444                             │  WebSocket JSON :8765
-        ▼                                                    ▼
+        │                                                     │
+        │  UDP DDS binario :4444                              │  WebSocket JSON :8765
+        ▼                                                     ▼
   Godot Digital Twin                                    Godot Digital Twin
   (visualizzazione 3D)                                  (comandi modalità)
         │
@@ -258,13 +258,20 @@ This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ```
+> La licenza GPLv3 si applica al codice scritto per questo progetto.
+> `DDS_v1_7.gd` deriva da codice del prof. Santoro: vedi [Crediti](#crediti-e-componenti-di-terze-parti).
+>
 
 ---
 
 ## Crediti e componenti di terze parti
 
-**Protocollo DDS.** Il protocollo di comunicazione DDS binario semplificato
+**Protocollo DDS.**  
+Il protocollo di comunicazione DDS binario semplificato
 (comandi `KEEP_ALIVE` / `SUBSCRIBE` / `PUBLISH`, formato dei pacchetti, porta 4444)
 deriva dal materiale del corso di Sistemi Robotici del prof. Corrado Santoro
 (Università di Catania):
@@ -277,5 +284,6 @@ codice (compreso il modulo DDS di `bridge_v1_7.py`, che usa solo il formato del
 protocollo). Questo non è lo standard DDS dell'OMG usato da ROS 2, ma un protocollo
 semplificato.  
 
-**Modello 3D.** Il modello di Alvik è stato scansionato dal robot fisico
+**Modello 3D.**  
+Il modello di Alvik è stato scansionato dal robot fisico
 con uno smartphone e ripulito in Blender.
