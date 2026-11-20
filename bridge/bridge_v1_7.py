@@ -232,7 +232,12 @@ _align_rot_y: float = 0.0
 # MODULO DDS — costanti, socket e packing
 # ══════════════════════════════════════════════════════════════════════════════
 
-# Costanti protocollo DDS custom (compatibile con DDS_v1_5.gd in Godot)
+# Protocollo DDS custom basato sul materiale del corso di Robotica
+# (prof. Corrado Santoro, Università di Catania):
+# https://github.com/corradosantoro/RoboticSystems/tree/main/lib/dds
+# Packing dei pacchetti riscritto e adattato al progetto Alvik.
+# Compatibile con DDS_v1_7.gd in Godot (stesso formato dei pacchetti).
+# Costanti protocollo DDS custom
 CMD_PUBLISH    = 0x82    # byte comando: pubblica variabile
 DDS_TYPE_INT   = 1       # tipo intero (4 byte signed little-endian)
 DDS_TYPE_FLOAT = 2       # tipo float (4 byte IEEE 754 little-endian)
