@@ -275,7 +275,8 @@ Il protocollo di comunicazione DDS binario semplificato
 (comandi `KEEP_ALIVE` / `SUBSCRIBE` / `PUBLISH`, formato dei pacchetti, porta 4444)
 deriva dal materiale del corso di Sistemi Robotici del prof. Corrado Santoro
 (Università di Catania):
-https://github.com/corradosantoro/RoboticSystems/tree/main/lib/dds
+https://github.com/corradosantoro/RoboticSystems/blob/main/godot/cart2D_no_physics/Components/DDS/dds.gd  
+(client Python di riferimento: https://github.com/corradosantoro/RoboticSystems/tree/main/lib/dds)
 
 Il file `DDS_v1_7.gd` è derivato dal suo server DDS in GDScript, adattato a questo
 progetto: è usato e pubblicato con il consenso dell'autore, resta di sua proprietà
