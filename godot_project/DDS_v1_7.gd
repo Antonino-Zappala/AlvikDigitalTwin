@@ -1,5 +1,10 @@
 ## DDS_v1_7.gd
 ## ============
+## Protocollo DDS custom basato sul materiale del corso di Robotica
+## (prof. Corrado Santoro, Università di Catania):
+## https://github.com/corradosantoro/RoboticSystems/tree/main/lib/dds
+## Implementazione server in GDScript riscritta e adattata al progetto Alvik.
+##
 ## Autoload (singleton globale) — Nodo DDS per la comunicazione UDP con il bridge.
 ##
 ## Implementa un protocollo DDS (Data Distribution Service) semplificato su UDP.
