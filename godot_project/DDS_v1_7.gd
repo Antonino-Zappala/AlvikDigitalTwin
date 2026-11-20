@@ -2,7 +2,8 @@
 ## ============
 ## Derivato dal server DDS del corso di Sistemi Robotici
 ## (prof. Corrado Santoro, Università di Catania):
-## https://github.com/corradosantoro/RoboticSystems/tree/main/lib/dds
+## https://github.com/corradosantoro/RoboticSystems/blob/main/godot/cart2D_no_physics/Components/DDS/dds.gd
+## (protocollo: https://github.com/corradosantoro/RoboticSystems/tree/main/lib/dds)
 ## Struttura, classi (DDSVariable, SubscribedVarCollection) e protocollo
 ## derivano dal suo codice; usato con il consenso dell'autore e adattato
 ## al progetto Alvik (autoload, TTL, TickId, svuotamento coda, correzioni).
