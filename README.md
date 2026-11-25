@@ -237,6 +237,19 @@ SLAM Toolbox autonomous robot, Python DDS bridge, Nav2 path following PID,
 Docker ROS2 container, gemello digitale robotica, simulazione 3D tempo reale.
 -->
 
+## Problemi noti
+
+Il progetto ha finalità didattiche e non è un prodotto finito. Questi sono i difetti
+noti nella versione 1.7, non ancora corretti:
+
+- **Viste laterali invertite.** Con il tasto `4` (vista laterale destra) la camera si
+  posiziona sul fianco sinistro del robot, e con il tasto `5` (vista laterale sinistra)
+  sul fianco destro. Le etichette nella finestra di debug sono corrette: l'errore è nella
+  posizione della camera (`_update_camera()` in `selezione_waypoint_v1_7.gd`).
+- **Rotazione delle ruote invertita durante la rotazione sul posto.** Nel gemello digitale,
+  quando Alvik ruota su se stesso il verso di rotazione delle ruote è invertito rispetto a
+  quello reale. Durante l'avanzamento e la retromarcia il verso è corretto.
+
 ---
 
 ## Licenza
