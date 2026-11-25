@@ -250,6 +250,13 @@ noti nella versione 1.7, non ancora corretti:
   quando Alvik ruota su se stesso il verso di rotazione delle ruote è invertito rispetto a
   quello reale. Durante l'avanzamento e la retromarcia il verso è corretto.
 
+### Segnalazioni
+
+Hai trovato un altro difetto? Apri una segnalazione nella scheda
+[Issues](https://github.com/Antonino-Zappala/AlvikDigitalTwin/issues): è benvenuta.
+Indica la versione, i passi per riprodurlo e cosa ti aspettavi. Le eventuali pull request
+vengono valutate e accettate manualmente.
+
 ---
 
 ## Licenza
